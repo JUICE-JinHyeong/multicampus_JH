@@ -304,64 +304,11 @@ ORDER BY 1 , 2;
 표시하며 고학번 학생이 먼저 표시되도록 한다. */
 
 
-SELECT      S.STUDENT_NAME
-        ,   P.PROFESSOR_NAME
-        
-        ,   D.DEPARTMENT_NAME
-FROM        TB_DEPARTMENT   D
-FULL JOIN        TB_STUDENT      S ON(D.DEPARTMENT_NO = S.DEPARTMENT_NO)
-FULL JOIN   TB_PROFESSOR    P ON(S.DEPARTMENT_NO = P.DEPARTMENT_NO)
-WHERE       D.DEPARTMENT_NAME = '서반아어학과' 
-ORDER BY    D.DEPARTMENT_NAME ;
-
-SELECT      
-            S.STUDENT_NAME
-        ,   NVL(S.COACH_PROFESSOR_NO , '지도 교수 미지정')
-        ,   D.DEPARTMENT_NAME
-FROM        TB_STUDENT      S
-FULL JOIN        TB_PROFESSOR    P ON(S.COACH_PROFESSOR_NO = P.PROFESSOR_NO) 
-FULL JOIN        TB_DEPARTMENT   D ON(P.DEPARTMENT_NO = D.DEPARTMENT_NO)
-WHERE       D.DEPARTMENT_NAME = '서반아어학과' ;
-------------------
-SELECT      S.STUDENT_NAME                  AS "학생"
-        ,   P.PROFESSOR_NAME                AS "교수"
-        ,   D.DEPARTMENT_NO
-        ,   NVL2(  S.COACH_PROFESSOR_NO 
-                 , NVL(P.PROFESSOR_NAME , '교수 번호와 학생을 연결')
-                 , '지도 교수 미지정'     )   AS "교수"
+SELECT      S.STUDENT_NAME                                          AS "학생 이름"
+        ,   NVL(P.PROFESSOR_NAME , '지도 교수 미지정')                AS "지도 교수"
 FROM        TB_STUDENT      S
 JOIN        TB_DEPARTMENT   D ON(S.DEPARTMENT_NO = D.DEPARTMENT_NO) 
-LEFT JOIN   TB_PROFESSOR    P ON(S.DEPARTMENT_NO = P.DEPARTMENT_NO) 
-ORDER BY    3;
----------------
-WHERE       P.PROFESSOR_NAME = (SELECT      P.PROFESSOR_NAME
-                                FROM        TB_STUDENT S
-                                JOIN        TB_D ON(S
-                                WHERE       )
+LEFT JOIN   TB_PROFESSOR    P ON(P.PROFESSOR_NO = S.COACH_PROFESSOR_NO) 
+WHERE       D.DEPARTMENT_NAME = '서반아어학과' 
+ORDER BY    STUDENT_NO DESC ;
 
-SELECT      S.STUDENT_NAME
-        ,   P.PROFESSOR_NAME
-        ,   
-FROM        TB_STUDENT      S
--- STUDENT 와 PROFESSOR 간 학과번호 20 접점이 없다..
-
-ORDER BY    DEPARTMENT_NO;
-
-
-SELECT  *
-FROM    TB_STUDENT
-ORDER BY DEPARTMENT_NO ;
-
-
-
--------
-
-
-SELECT      P.PROFESSOR_NAME
-        ,   S.COACH_PROFESSOR_NO
-        ,   S.STUDENT_NAME
-        ,   D.DEPARTMENT_NAME
-FROM        TB_STUDENT      S
-LEFT JOIN   TB_PROFESSOR    P ON(S.COACH_PROFESSOR_NO = P.PROFESSOR_NO)
-LEFT JOIN        TB_DEPARTMENT   D ON(P.DEPARTMENT_NO = D.DEPARTMENT_NO)
-ORDER BY 4;
