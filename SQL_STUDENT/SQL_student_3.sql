@@ -299,8 +299,8 @@ ORDER BY 1 , 2;
 -- ERD를 자세히 보고 부모 자식 관계를 확인할 것
 
 /* 14 춘 기술대학교 서반아어학과 학생들의 지도교수를 게시하고자 핚다. 학생이름과
-지도교수 이름을 찾고 맊일 지도 교수가 없는 학생일 경우 "지도교수 미지정‛으로
-표시하도록 하는 SQL 문을 작성하시오. 단, 출력헤더는 ‚학생이름‛, ‚지도교수‛로
+지도교수 이름을 찾고 맊일 지도 교수가 없는 학생일 경우 "지도교수 미지정?으로
+표시하도록 하는 SQL 문을 작성하시오. 단, 출력헤더는 ?학생이름?, ?지도교수?로
 표시하며 고학번 학생이 먼저 표시되도록 한다. */
 
 
@@ -310,5 +310,234 @@ FROM        TB_STUDENT      S
 JOIN        TB_DEPARTMENT   D ON(S.DEPARTMENT_NO = D.DEPARTMENT_NO) 
 LEFT JOIN   TB_PROFESSOR    P ON(P.PROFESSOR_NO = S.COACH_PROFESSOR_NO) 
 WHERE       D.DEPARTMENT_NAME = '서반아어학과' 
-ORDER BY    STUDENT_NO DESC ;
+ORDER BY    STUDENT_NO ;
+
+
+-- 15 휴학생이 아닌 학생 중 평점이 4.0 이상인 학생을 찾아 학생의 (학번 이름 학과 이름 평점)을 출력
+
+
+SELECT      S.STUDENT_NO            AS "학번"
+        ,   S.STUDENT_NAME          AS "이름"
+        ,   D.DEPARTMENT_NAME       AS "학과 이름"
+        ,   V.GRADE_AVG             AS "평점"
+FROM        ( SELECT    ROUND(AVG(POINT) , 6) AS "GRADE_AVG"
+                     ,  G.STUDENT_NO          AS "STUDENT_NU"
+              FROM      TB_GRADE G
+              JOIN      TB_STUDENT S ON (G.STUDENT_NO = S.STUDENT_NO)
+              GROUP BY  G.STUDENT_NO ) V
+JOIN        TB_STUDENT      S ON(V.STUDENT_NU = S.STUDENT_NO)
+JOIN        TB_DEPARTMENT   D ON(S.DEPARTMENT_NO = D.DEPARTMENT_NO)
+WHERE       GRADE_AVG >= 4.0 
+AND         STUDENT_NU IN       (SELECT        STUDENT_NO
+                                 FROM          TB_STUDENT
+                                 WHERE         ABSENCE_YN = 'N')
+ORDER BY S.STUDENT_NO ;
+
+
+-- 16 환경조경학과 전공과목들의 과목 별 평점을 파악하기
+
+-- 과목 별 평점
+
+SELECT      ROUND(AVG(POINT) , 8)
+        ,   G.CLASS_NO
+        ,   G.STUDENT_NO
+FROM        TB_GRADE G
+JOIN        TB_CLASS C ON (G.CLASS_NO = C.CLASS_NO)
+GROUP BY    G.STUDENT_NO , G.CLASS_NO ;
+
+-- 16
+
+SELECT      C.CLASS_NO                                AS "과목번호"
+        ,   C.CLASS_NAME                              AS "과목이름"
+        ,   V.AVG_POINT                               AS "과목평균"
+FROM        (
+                    SELECT      ROUND(AVG(POINT) , 8) AS "AVG_POINT"
+                            ,   G.CLASS_NO
+                    FROM        TB_GRADE G
+                    JOIN        TB_CLASS C ON (G.CLASS_NO = C.CLASS_NO)
+                    GROUP BY    G.CLASS_NO 
+            ) V
+JOIN        TB_CLASS        C ON(V.CLASS_NO = C.CLASS_NO)
+JOIN        TB_DEPARTMENT   D ON(C.DEPARTMENT_NO = D.DEPARTMENT_NO)
+WHERE       D.DEPARTMENT_NAME = '환경조경학과' AND C.CLASS_TYPE = '전공선택'
+ORDER BY    C.CLASS_NO ;
+
+
+-- 17 춘 기술대학교에 다니고있는 / 최경희 학생과 / 같은 과 학생 / 들의 이름과 주소를 출력
+SELECT      EMP_ID
+        ,   EMP_NAME
+FROM        EMPLOYEE
+WHERE       JOB_ID =  ( SELECT JOB_ID
+                        FROM   EMPLOYEE
+                        WHERE  EMP_NAME = '나승원') 
+AND
+            SALARY > ( SELECT  SALARY
+                        FROM   EMPLOYEE
+                        WHERE  EMP_NAME = '나승원');
+                        
+-- 최경희 학생과 같은 과 학생
+
+SELECT      D.DEPARTMENT_NO
+FROM        TB_STUDENT S
+JOIN        TB_DEPARTMENT D ON (S.DEPARTMENT_NO = D.DEPARTMENT_NO)
+WHERE       STUDENT_NAME = '최경희' ;
+
+-- 17
+
+SELECT      S.STUDENT_NAME
+        ,   S.STUDENT_ADDRESS
+FROM        TB_DEPARTMENT   D
+JOIN        TB_STUDENT      S ON (D.DEPARTMENT_NO = S.DEPARTMENT_NO)
+WHERE       D.DEPARTMENT_NO 
+IN          (   SELECT      D.DEPARTMENT_NO
+                FROM        TB_STUDENT S
+                JOIN        TB_DEPARTMENT D ON (S.DEPARTMENT_NO = D.DEPARTMENT_NO)
+                WHERE       STUDENT_NAME = '최경희' 
+            );
+
+-- 18 국어국문학과에서 / 총평점이 / 가장 높은 학생 / 이름과 학번
+
+-- 국어국문학과
+
+SELECT      DEPARTMENT_NO
+FROM        TB_DEPARTMENT
+WHERE       DEPARTMENT_NAME = '국어국문학과' ;
+
+-- 총평점
+
+SELECT      ROUND(AVG(POINT), 2)
+        ,   STUDENT_NO
+FROM        TB_GRADE
+GROUP BY    STUDENT_NO 
+ORDER BY    1 DESC;
+
+SELECT      *
+FROM        TB_GRADE
+WHERE       CLASS_NO = '001' ;
+
+-- 위 2개 연결
+
+SELECT      D.DEPARTMENT_NO
+        ,   S.STUDENT_NAME
+        ,   G.POINT
+FROM        TB_DEPARTMENT   D
+JOIN        TB_STUDENT      S ON (D.DEPARTMENT_NO = S.DEPARTMENT_NO)
+JOIN        TB_GRADE        G ON (S.STUDENT_NO = G.STUDENT_NO)
+WHERE       DEPARTMENT_NAME = '국어국문학과'
+AND         (G.POINT , S.STUDENT_NO)
+                 IN 
+                    (  
+                        SELECT      ROUND(AVG(POINT), 2)
+                                ,   STUDENT_NO
+                        FROM        TB_GRADE
+                        GROUP BY    STUDENT_NO 
+                    ) ;
+                    
+--
+
+SELECT      S.DEPARTMENT_NO
+FROM        TB_STUDENT      S
+JOIN        TB_GRADE        G ON(S.STUDENT_NO = G.STUDENT_NO)    
+WHERE       (G.POINT , S.STUDENT_NO)
+                 IN 
+                    (  
+                        SELECT      ROUND(AVG(POINT), 2)
+                                ,   STUDENT_NO
+                        FROM        TB_GRADE
+                        GROUP BY    STUDENT_NO 
+                    ) ;
+
+-- 
+
+SELECT      *
+FROM        (
+                SELECT      DISTINCT
+                            S.DEPARTMENT_NO AS "DEPARTMENT_NO"
+                        ,   S.STUDENT_NAME  AS "STUDENT_NAME"
+                        ,   S.STUDENT_NO    AS "STUDENT_NO"
+                        ,   G.POINT         AS "POINT"
+                FROM        TB_STUDENT      S
+                JOIN        TB_GRADE        G ON(S.STUDENT_NO = G.STUDENT_NO)    
+                WHERE       (G.POINT , S.STUDENT_NO)
+                             IN 
+                                    (  
+                                        SELECT      (AVG(POINT))
+                                                ,   STUDENT_NO
+                                        FROM        TB_GRADE
+                                        GROUP BY    STUDENT_NO 
+                                        R
+                                    )
+            )               V
+JOIN        TB_DEPARTMENT   D ON (V.
+;
+
+--- 18
+      
+SELECT  S.STUDENT_NO,
+        S.STUDENT_NAME
+FROM    TB_STUDENT S
+/*(SELECT      S.STUDENT_NO,
+                    S.STUDENT_NAME
+        FROM        TB_STUDENT    S
+        JOIN        TB_GRADE      G ON (G.STUDENT_NO = S.STUDENT_NO)
+        JOIN        TB_DEPARTMENT D ON (D.DEPARTMENT_NO = S.DEPARTMENT_NO)
+        WHERE       DEPARTMENT_NAME = '국어국문학과'
+        GROUP BY    S.STUDENT_NO, S.STUDENT_NAME )  A 
+        */
+JOIN        TB_GRADE      G ON (G.STUDENT_NO = S.STUDENT_NO)
+WHERE       DEPARTMENT_NO LIKE '001'
+GROUP BY    S.STUDENT_NO, S.STUDENT_NAME 
+HAVING      AVG(G.POINT) = ( SELECT     MAX(AVG(G.POINT))
+                             FROM       TB_GRADE G
+                             JOIN       TB_STUDENT S ON (S.STUDENT_NO = G.STUDENT_NO)
+                             WHERE      S.DEPARTMENT_NO LIKE '001'
+                             GROUP BY   S.STUDENT_NO );
+               
+-- 19  환경조경학과 / 속한  같은 계열 학과 / 학과별 전공과목 평점 /
+
+SELECT      CATEGORY
+FROM        TB_DEPARTMENT
+WHERE       DEPARTMENT_NAME = '환경조경학과' ;
+
+-- 같은 계열 학과
+
+SELECT  *
+FROM    TB_DEPARTMENT
+WHERE   CATEGORY 
+IN      (   SELECT      CATEGORY
+            FROM        TB_DEPARTMENT
+            WHERE       DEPARTMENT_NAME = '환경조경학과'
+         ) ;
+         
+-- 학과별
+
+SELECT      ROUND(AVG(POINT) , 1) AS "AVG"
+FROM        TB_GRADE
+GROUP BY    CLASS_NO ;
+
+-- 
+
+SELECT      DEPARTMENT_NAME             AS "계열 학과명"
+        ,   ROUND(AVG(G.POINT) , 1)     AS "전공평점"
+FROM        TB_DEPARTMENT   D
+JOIN        TB_CLASS        C ON (D.DEPARTMENT_NO = C.DEPARTMENT_NO)
+JOIN        TB_GRADE        G ON (C.CLASS_NO = G.CLASS_NO)
+WHERE   
+            D.CATEGORY 
+                        IN      (   
+                                    SELECT      CATEGORY
+                                    FROM        TB_DEPARTMENT
+                                    WHERE       DEPARTMENT_NAME = '환경조경학과'
+                                ) 
+AND     
+            G.POINT 
+                        IN      (   
+                                    SELECT      ROUND(AVG(G.POINT) , 1) AS "AVG"
+                                    FROM        TB_GRADE    G
+                                    JOIN        TB_CLASS    C ON (G.CLASS_NO = C.CLASS_NO)
+                                    WHERE       C.CLASS_TYPE LIKE '전공%'
+                                    GROUP BY    G.CLASS_NO 
+                                )
+
+GROUP BY    DEPARTMENT_NAME ;
 
