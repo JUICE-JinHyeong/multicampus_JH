@@ -169,10 +169,11 @@ xor(a,b)
 xor(c(a,b),c(a,b))
 # 집합
 a <- 1:10
+a1 <- 2:10
 b <- 11:20
 union(a,b)
-setdiff(a,b)
-intersect(a,b)
+setdiff(a,a1)
+intersect(a,a1)
 setequal(a,b)
 setequal(1,1)
 
