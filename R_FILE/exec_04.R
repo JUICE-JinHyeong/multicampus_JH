@@ -11,6 +11,12 @@
 # fl : 연료 종류
 raw.mpg
 
+
+install.packages("dplyr")
+install.packages("doBy")
+library(doBy)
+library(dplyr)
+
 # 1. 자동차 배기량에 따라 고속도로 연비가 다른지 알아보려 한다. 
 # displ(배기량)이 4 이하인 자동차와 4 초과인 자동차 중 
 # 어떤 자동차의 hwy(고속도로 연비)가 평균적으로 더 높은지 확인하세요.
