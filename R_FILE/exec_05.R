@@ -9,7 +9,7 @@ head(salary_data_eda)
 str(salary_data_eda)
 
 # 1. 컬럼명을 영문으로 변경
-("Age","Salary","SpecialSalary","WorkingTime","Numberofworker","Career","Gender")
+#("Age","Salary","SpecialSalary","WorkingTime","Numberofworker","Career","Gender")
 names(salary_data_eda) = c("Age","Salary","SpecialSalary","WorkingTime","Numberofworker","Career","Gender")
 salary_data_eda
 
@@ -24,7 +24,17 @@ data.frame(Age               = sum(is.na(salary_data_eda$Age)) ,
           )
 
 # 3. 임금 평균 확인
-mean(salary_data_eda$Salary , na.rm = TRUE)
+
+avg_salary <- mean(salary_data_eda$Salary , na.rm = TRUE)
+avg_salary <- round(avg_salary)
+substr(avg_salary , nchar(avg_salary)-2 , nchar(avg_salary))
+gsub(substr(avg_salary , nchar(avg_salary)-2 , nchar(avg_salary)), '.' , avg_salary)
+
+avg_salary
+
+
+?substr
+
 
 # 4. 임금 중앙값 확인
 median(salary_data_eda$Salary , na.rm = TRUE)
@@ -43,11 +53,42 @@ quantile(salary_data_eda$Salary , na.rm = TRUE)
 
 library(reshape2)
 
+
+View(salary_data_eda)
+
+gender_salary <- salary_data_eda %>% 
+  select(Salary , Gender) %>% 
+  mutate(range_salary = case_when(
+    Salary <= 1200000 ~ '~120' ,
+    Salary <= 1700000 ~ '120 ~ 170만' ,
+    Salary <= 2200000 ~ '170 ~ 220만' ,
+    Salary <= 2600000 ~ '220 ~ 260만' ,
+    Salary <= 4100000 ~ '260 ~ 410만' ,
+    Salary >  4100000 ~ '410~'
+    
+  ))
+
+gender_salary_grap <- gender_salary %>% 
+  select(Gender , range_salary)
+gender_salary_grap
+
+ggplot(gender_salary_grap ,
+       aes(x = range_salary ,
+           fill = Gender)) +
+  geom_bar(position = 'dodge' ,
+           color    = 'black') +
+  scale_fill_manual(values = c('skyblue' , 'pink')) +
+  ggtitle('남녀 연봉 통계') +
+  title( xlab     = '연봉'  ,
+         ylab     = '수(명)')
+
+?fill
 View(salary_data_eda)
 man_s <- salary_data_eda %>% 
   filter(Gender == '남') %>% 
   mutate(salary_m = Salary) %>% 
   select(salary_m)
+
 woman_s <- salary_data_eda %>% 
   filter(Gender == '여') %>% 
   mutate(salary_w = Salary) %>% 
@@ -55,7 +96,7 @@ woman_s <- salary_data_eda %>%
 
 man_woman_s <- man_s-woman_s
 salary_data_eda2$dif <- man_woman_s
-
+man_s
 names(man_woman_s) <- 'men-women_salary'
 
 # 8. 7번에서 분석된 데이터를 가지고 원하는 시각화 진행
