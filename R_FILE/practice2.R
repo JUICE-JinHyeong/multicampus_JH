@@ -30,7 +30,7 @@ html
 
 html_nodes(html , '.title')
 html_node(html , '.title')
-
+typeof(html_nodes(html , '.title'))
 nodes <- html_nodes(html , '.title')
 nodes
 
