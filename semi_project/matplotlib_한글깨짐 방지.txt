@@ -1,0 +1,16 @@
+# 한글 깨짐 방지
+# 원리는 색상 폰트들에서 한글을 인식하는 폰트로 바꾸어주는 구조
+def font_kor_fixed() :
+    from matplotlib import font_manager, rc
+    import platform 
+
+    if platform.system() == 'Windows': 
+        path = 'c:/Windows/Fonts/malgun.ttf'
+        font_name = font_manager.FontProperties(fname=path).get_name()
+        rc('font', family=font_name)
+    elif platform.system() == 'Darwin':
+        rc('font', family='AppleGothic')
+    else: 
+        print('Check your OS system')
+
+font_kor_fixed()

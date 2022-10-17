@@ -1,0 +1,31 @@
+http://www.gisdeveloper.co.kr/?p=2332
+지도 데이터 
+https://namu.wiki/w/%ED%97%A5%EC%8A%A4%20%EC%BD%94%EB%93%9C
+색상 코드
+https://coding-law.tistory.com/30
+R 지도시각화 기초 공부(메인)
+https://kuduz.tistory.com/1042
+R 지도 시각화 기초 공부 2
+
+
+https://m.blog.naver.com/coder1252/221041479759
+r 그래프 그리기
+https://mustlearning.tistory.com/12
+r 모든 그래프 종류
+****
+
+https://www.vw-lab.com/100
+참고자료  인구수 시각화(오짐)
+https://mapshaper.org/
+shp파일 json 변경
+https://blog.naver.com/PostView.nhn?blogId=kcchang61&logNo=221350672356
+json 파일 사용법
+http://www.gisdeveloper.co.kr/?p=2101
+XrProjection v3.1 다운로드
+https://mkjjo.github.io/python/2019/08/18/korea_population.html
+python 지도 시각화
+
+****
+https://teddylee777.github.io/visualization/folium
+python 지도 시각화
+****

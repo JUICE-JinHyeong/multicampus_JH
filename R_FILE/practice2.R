@@ -30,7 +30,7 @@ html
 
 html_nodes(html , '.title')
 html_node(html , '.title')
-typeof(html_nodes(html , '.title'))
+
 nodes <- html_nodes(html , '.title')
 nodes
 
@@ -464,6 +464,8 @@ map = get_googlemap(center = as.numeric(gc),
                     size = c(320, 320))
 
 ggmap(map)
+
+
 
 
 

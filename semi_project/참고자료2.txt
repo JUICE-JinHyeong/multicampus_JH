@@ -1,0 +1,10 @@
+https://wikidocs.net/141547
+dataframe.plot() 자료 https://wikidocs.net/159927
+https://lsh-story.tistory.com/79
+https://colors.eva.design/
+https://matplotlib.org/stable/gallery/lines_bars_and_markers/stackplot_demo.html
+https://www.pythonpool.com/matplotlib-table/
+https://jimmy-ai.tistory.com/132
+
+%matplotlib inline 의 역할은 notebook을 실행한 브라우저에서 바로 그림을 볼 수 있게 해주는 것
+https://korbillgates.tistory.com/85 [생물정보학자의 블로그:티스토리]
