@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <pre>
+    pre -> 모든 특수 기호를 나타낼 수 있다.
+    # 웹 양식을 만드는 데 사용하는 태그
+    form - input
+    <ul>
+      <li> action : 사용자가 입력한 데이터를 받아 처리하는 페이지 지정 </li>
+      <li> method : 통신 방식 지정(GET , POST) </li>
+      <li> type   : 폼의 모양과 기능을 정의 </li>
+      <li> name   : 폼의 이름 지정 </li>
+    </ul>
+
+    <div align = "left">
+      <form action = "../login/" method = "post">
+        <h2>method = "post" 사용시 {% csrf_token %} 적어줘야함</h2>
+        <h2>method = "get" 사용시 없어도 가능</h2>
+        {% csrf_token %}
+        <label>ID</label>
+        <input type = "text" name = "user_id" placeholder="ID를 입력하세요">
+        <label>PWD</label>
+        <input type = "password" name = "user_pwd" placeholder="PWD를 입력하세요" autofocus required>
+        <input type = "submit" value = "LOGIN" >
+        <input type = "reset" value = "RESET" >
+    </div>
+    <div align = "left">
+      <form action = "" method ="">
+        <label>당신의 성별은 무엇입니까?</label>
+        <input type = "radio" name = "gender" value = "male"> 남자
+        <input type = "radio" name = "gender" value = "female"> 여자
+        <p></p>
+        <label>당신의 관심 주제는 무엇입니까?</label>
+        <input type = "checkbox" name = "title" value = "html"       > HTML5
+        <input type = "checkbox" name = "title" value = "css"        > CSS
+        <input type = "checkbox" name = "title" value = "JAVASCRIPT" > JAVASCRIPT
+        <p></p>
+        <label>당신의 관심있는 먹거리는 무엇입니까?</label>
+        <select>
+          <option value = "버거">수제버거</option>
+          <option value = "국밥">국밥</option>
+          <option value = "양꼬치" selected>양꼬치</option>
+        </select>
+        <label> 당신의 컴퓨터를 선택하세요. </label>
+        <select name = "major">
+          <optgroup label="computer">
+            <option value = 'intel'> intel</option>
+            <option value = 'Ryzen'> Ryzen</option>
+          </optgroup>
+          <optgroup label="grapic">
+            <option value = '1660super'> 1660super</option>
+            <option value = '3070TI'> 3070TI</option>
+          </optgroup>
+        </select>
+        <p></p>
+        <label> 당신의 전공분야를 입력하세요 </label>
+        <input type = "text" list = "majorlist" name ="major">
+        <datalist id = "majorlist">
+          <option value = "정보통신공학과"> 정보통신공학과</option>
+          <option value = "소프트웨어학과"> 소프트웨어학과</option>
+        </datalist>
+        <p></p>
+        <label>날짜입력</label>
+        <input type = "date" name = "today">
+        <p/>
+        <label>현재 시간 입력</label>
+        <input type = "time" name = "now">
+        <p/>
+        <label>원하는 색상 선택</label>
+        <input type = "color" name = "color_value">
+        <p/>
+        <label>나이를 입력</label>
+        <input type = "range" name = "age" min = "1" max = "100">
+        <p/>
+        <label>메일 주소 입력</label>
+        <input type = "email" name = "email">
+      </form>
+    </div>
+    <div style = "background-color:red"> div 첫 번째 영역</div>
+    <div style = "background-color:blue"> div 두 번째 영역</div>
+    <span style = "background-color:yellow"> span 첫 번째 영역</span>
+    <span style = "background-color:green"> span 두 번째 영역</span>
+  </pre>
+</body>
+</html>
