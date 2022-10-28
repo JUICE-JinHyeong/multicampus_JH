@@ -1,0 +1,77 @@
+web application (Django Framework(웹 서버 내장) - python)
+브라우저라는 도구를 활용한 프로그램
+
+?MVC(모델 뷰 컨트롤러)
+?Framework(구조물) - Model View Template
+
+WEB - 풀 브라우징 방식(화면의 분기와 렌더링 발생)
+
+(client)				(server)
+
+		request
+	https://~~~~~~~~~~~~
+
+Broswer ---------------------------------> Django Framework
+          <---------------------------------  
+
+Front <----------------------------------> Back
+
+
+
+구조(html)
+표현(css)
+동작(javascript)
+
+URL
+
+http://www.domain.com:1234/path/to/resourse?!=b&x=y
+protovol host               port   resource path      query
+
+
+
+-- CRUD
+
+WEB
+-- bbsApp
+-- userApp
+-- noticeApp
+-- 
+
+
+
+
+
+-- 10.25
+
+Front - End 기반 기술
+.html .jsp .asp .php
+html(tag + text)  -  markup language
+tag(<start></start> , <tag/>)
+
+
+html 참고 자료 : w3school
+startBootstrap html+css 화면 구성 구하는 홈페이지.
+
+
+정적리소스인 이미지를 통합관리( WEB ) 하기 위해서.
+> python manage.py collectstatic
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

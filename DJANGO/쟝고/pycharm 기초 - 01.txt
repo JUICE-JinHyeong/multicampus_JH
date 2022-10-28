@@ -1,0 +1,43 @@
+Terminal 누르기
+터미널의 Local 옆 아래 화살표 누르기
+Command prompt 누르기
+
+django-admin startproject djangoWEB
+
+입력하기
+
+-> Django - (MVT) - server 설치 완료
+
+cd djangoWEB
+
+서버 실행 명령어
+
+manage.py있는 디렉토리에서
+>python manage.py runserver
+
+
+settings.py
+
+ALLOWED_HOSTS = ['127.0.01' , 'localhost']
+
+
+templates
+dirs
+os.path.join(BASE_DIR , 'djangoWEB/templates')
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR , "db.sqlite3"),
+    }
+}
+
+
+
+urls.py
+
+M
+View - 로직 처리를 담당하는 역할
+T 
+http://127.0.0.1:8000/write -----> urls.py -------> view (함수 정의)
+

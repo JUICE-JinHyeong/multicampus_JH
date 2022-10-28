@@ -1,0 +1,54 @@
+django-admin startproject djangoWEB
+# settings.py
+BASE_DIR =os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ALLOWED_HOSTS = ['127.0.0.1' , 'localhost']
+TEMPLATES =  "DIRS": [os.path.join(BASE_DIR , 'djangoWEB/templates']
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR , "db.sqlite3"),
+    }
+}
+TIME_ZONE = "Asia/Seoul"
+
+0. django-admin startproject djangoWEB
+1. python manage.py runserver
+2. cd djangoWEB
+3. python manage.py startapp exampleApp
+
+# settings.py
+INSTALLED_APPS = ["exampleApp"]
+
+
+python 파일 urls 만들기
+디렉토리로 templates 
+
+
+path("example/" , include('exampleApp/urls')) 
+
+exampleApp
+
+exampleApll.urls.py 주의
+
+from django.urls import path, include
+from exampleApp import views
+
+패키지 확인
+
+
+
+
+
+
+
+
+---
+
+rom django.urls import path, include
+from exampleApp import views
+
+# http://localhost:800/greeting/
+urlpatterns = [
+    ## http://localhost:800/greeting/index
+    path("index/" , views.index)
+]

@@ -1,0 +1,17 @@
+javascript
+<html>
+	<style>css</style>
+<body>
+content <a herf> , <form> - input
+
+----------- ES6
+content
+<body>
+	<script> - Document Object Model(DOM)수정 , 삭제 , 추가
+		javascript(변수 , 조건문 , 반복문)
+</html>
+
+자바스크립트를 배워야하는 이유
+
+
+?Restful service - 기술기반 AJAX 통신

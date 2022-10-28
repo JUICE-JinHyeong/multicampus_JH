@@ -1,0 +1,9 @@
+쟝고 단축키
+
+
+python manage.py startapp
+
+python manage.py collectstatic
+
+{% load static %}
+
