@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div ul { color : red; }
+        div h2 { color : yellow ;
+                 background-color : purple;}
+        body > div > h3{ color : red ;}
+        body > h3 > tel > home { color : blue }
+    </style>
+</head>
+<body>
+  <pre>
+      후손 선택자 : 선택자 A 선택자 B (선택자 B가 선택자 A에 반드시 포함되어 있을 경우에 선택)\
+      자손 선택자 : 선택자 A > 선택자 B (직계 자손인 선택자)
+  </pre>
+  <div>
+      <h2>후손 선택자</h2>
+      <ul>후손 선택자
+          <li>후손01</li>
+          <li>후손02</li>
+      </ul>
+  </div>
+
+  <div>
+      <h3> 자손 선택자 </h3>
+  </div>
+
+    <h3>
+        <empno>123456789</empno>
+        <sname>임정섭</sname>
+        <tel>
+            <office>02-1234-1234</office><br/>
+            <home>02-1234-1234</home><br/>
+        </tel>
+    </h3>
+</body>
+</html>

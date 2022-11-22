@@ -1,0 +1,50 @@
+제공된 3개의 파일을 활용한 [실습]
+
+- user_ratings.dat
+- movies.dat
+- users.dat
+
+# import pandas as pd 
+ 
+1. 각 파일을 pd.read_csv() 로 읽어들인다
+- 헤더 및 구분자 확인요망
+
+2. 데이터 확인 및 구조분석과 각 데이터 프레임에 헤더를 추가
+ratings.dat
+- userId movieId rating timestamp
+movies.dat
+- movieId title genres
+users.dat(뒤에 두 열은 제거)
+- userId gender age
+
+
+3. 공통 컬럼을 이용한 데이터 병합
+
+4. user 평점 갯수 순위 확인(sort)
+
+7. 평점이 200개 이상인 영화들의 성별 평균 평점
+
+8. 여성이 가장 좋아하는 영화 순위
+
+9. 남녀간의 평균 평점 차이
+
+
+# ---- 추가적인 요구사항
+
+5.  각 영화의 성별 평균 평점
+6.  평점이 220개 이상인 영화만 필터링(filter())
+10. 평점의 표준편차가 큰 영화
+
+
+# ---- 추가적인 요구사항
+
+Comedy영화 중 가장 평점이  낮은 영화의 제목
+평균 평점이 가장 높은 영화의 제목(동률이 있을 경우 모두 출력)
+각 영화별 평균 평점
+
+
+
+
+
+
+

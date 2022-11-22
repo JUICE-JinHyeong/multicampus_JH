@@ -1,0 +1,126 @@
+# 실습 1
+
+import numpy as np
+data = np.loadtxt('./data/ratings.dat' , delimiter = "::", dtype=np.int64)
+
+
+# 첫 5행 확인
+data[:5]
+
+
+#모양 확인
+data.shape
+
+
+#전체 평균 평점
+data[:, 2].mean()
+
+
+#사용자 아이디 수집
+x = []
+for i in range(len(data)):
+  if data[i,0] not in x:
+    x.append(data[i,0])
+print(x)
+
+
+
+#사용자별 평점 확인
+temp_list = []
+for y in x:
+  temp = data[data[:,0]==y, 2].mean()
+  temp_list.append([y, temp])
+print(temp_list)
+
+
+
+#리스트 배열 변환, 평점 4점 이상 사용자 구하기
+id_ratings = np.array(temp_list)
+upper_id = id_ratings[id_ratings[:, 1] >=4, :]
+aryinfo(upper_id)
+
+
+np.savetxt('test.csv', upper_id, fmt='%.1f', delimiter=',' )
+
+
+# 실습2
+
+seoul = np.loadtxt('./data/seoul.csv' , delimiter = ",", dtype=np.str, skiprows=1)
+daegu = np.loadtxt('./data/daegu.csv' , delimiter = ",", dtype=np.str, skiprows=1)
+
+
+#서울 최고기온 높았던날 언제인가?
+for x in seoul:
+    if x[4] == '':
+        x[4] = -20
+highday = np.argmax(seoul[:, 4].astype(np.float))
+seoul[highday, :]
+
+
+
+#일교차 가장 큰 날짜?
+whole = np.vstack([seoul, daegu])
+for y in whole:
+    if y[3] == '':
+        y[3] = -20
+    if y[4] == '':
+        y[4] = -20
+high_diff = np.argmax(whole[:, 4].astype(np.float)-whole[:,3].astype(np.float))
+whole[high_diff, :]
+
+
+
+#평균적으로 일교차가 가장 큰 날짜?
+seoul = np.loadtxt('./data/seoul.csv' , delimiter = ",", dtype=np.str, skiprows=1)
+daegu = np.loadtxt('./data/daegu.csv' , delimiter = ",", dtype=np.str, skiprows=1)
+whole = np.vstack([seoul, daegu])
+
+day_list = []
+day = []
+for d in whole:
+    d[0] = d[0][5:]
+    if d[3] == '':
+        d[3] = -20
+    if d[4] == '':
+        d[4] = -20
+    temp = float(d[4]) - float(d[3])
+    day_list.append([d[0], float(temp)])
+    if d[0] not in day:
+        day.append(d[0])
+day_list = np.array(day_list)
+
+day_mean = []
+for d in day:
+    temp = day_list[day_list[:,0]==d, 1].astype(np.float).mean()
+    day_mean.append([d, temp])
+day_mean = np.array(day_mean)
+day_max = np.array(day_mean)[:,1].astype(np.float).argmax()
+day_mean[day_max, :]
+
+
+
+#대구보다 서울이 더 더운날이 가장 많은 연도는?
+seoul = np.loadtxt('./data/seoul.csv' , delimiter = ",", dtype=np.str, skiprows=1)
+daegu = np.loadtxt('./data/daegu.csv' , delimiter = ",", dtype=np.str, skiprows=1)
+
+for x in seoul:
+    if x[4]=='':
+        x[4]=-20
+for x in daegu:
+    if x[4]=='':
+        x[4]=-20
+winner = []
+
+for d in seoul:
+    t = daegu[daegu[:,0]==d[0], 4]
+    if (float(d[4]) > float(t) and t!='-20'):
+        winner.append(d[0][:4])
+winner = np.array(winner)
+(a, b) = np.unique(winner, return_counts=True)
+print(a ,len(a))
+print(b, len(b))
+c = b.argmax()
+a[c]
+
+
+
